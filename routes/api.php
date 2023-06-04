@@ -1,6 +1,6 @@
 <?php
 
-use App\Helpers\ApiResponse;
+use App\Http\Controllers\MassagePlaceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("/massage_places", function () {
-    $massagePlaces = App\Models\MassagePlace::all();
-    return ApiResponse::createSuccessResponse($massagePlaces);
-});
+Route::get("/massage-places", [MassagePlaceController::class, "getAllMassagePlaces"]);
+Route::get("/massage-places/{id}", [MassagePlaceController::class, "getMassagePlace"]);
