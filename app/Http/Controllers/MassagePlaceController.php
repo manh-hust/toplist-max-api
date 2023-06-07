@@ -37,9 +37,9 @@ class MassagePlaceController extends Controller
             );
         }
         $massagePlaces =  $query->with('serviceLanguages')
-                                ->limit($limit)
-                                ->offset($offset)
-                                ->get();
+            ->limit($limit)
+            ->offset($offset)
+            ->get();
 
         $total = $query->count();
 
@@ -61,6 +61,6 @@ class MassagePlaceController extends Controller
         if (!$massagePlace) {
             return ApiResponse::createFailedResponse(["Massage place not found"], 404);
         }
-        return ApiResponse::createFailedResponse(new MassagePlaceResource($massagePlace));
+        return ApiResponse::createSuccessResponse(new MassagePlaceResource($massagePlace));
     }
 }
