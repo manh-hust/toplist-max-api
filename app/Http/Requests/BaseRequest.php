@@ -12,7 +12,12 @@ class BaseRequest extends FormRequest
     protected function failedValidation(Validator $validator)
     {
         $listErrors = $validator->errors();
-        $response = ApiResponse::createFailedResponse($listErrors, 422, 'VALIDATION_FAILED');
+        $listErrorsFormatted = [];
+
+        foreach ($listErrors->all() as $message) {
+            $listErrorsFormatted[] = $message;
+        }
+        $response = ApiResponse::createFailedResponse($listErrorsFormatted, 422, 'VALIDATION_FAILED');
         throw new ValidationException($validator, $response);
     }
 }
