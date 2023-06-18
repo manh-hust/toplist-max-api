@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             MassagePlaceSeeder::class,
             ServiceLanguageSeeder::class,
             CommentSeeder::class,
+            MasseuseSeeder::class,
+            MasseuseServiceLanguageSeeder::class,
         ]);
     }
 }

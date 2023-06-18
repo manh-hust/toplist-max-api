@@ -23,6 +23,7 @@ class MassagePlace extends Model
         'status',
         'max_price',
         'min_price',
+        'photo_url'
     ];
 
     public function serviceLanguages()
@@ -33,5 +34,10 @@ class MassagePlace extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class, 'massage_place_id', 'id');
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'massage_place_id', 'id');
     }
 }
