@@ -1,9 +1,10 @@
 <?php
 
 use App\Http\Controllers\MassagePlaceController;
+use App\Http\Controllers\MasseuseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get("/massage-places", [MassagePlaceController::class, "getAllMassagePlaces"]);
 Route::get("/massage-places/{id}", [MassagePlaceController::class, "getMassagePlace"]);
+Route::get("/massage-places/{id}/staffs", [MasseuseController::class, "getALlStaffs"]);
+Route::get("/massage-places/{id}/staffs/{staffId}", [MasseuseController::class, "getStaff"]);
+Route::get("/massage-places/{id}/comments", [CommentController::class, "getAllComments"]);

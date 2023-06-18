@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\MasseuseServiceLanguage;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ServiceLanguage;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ServiceLanguage>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
  */
-class ServiceLanguageFactory extends Factory
+class MasseuseServiceLanguageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,15 +18,15 @@ class ServiceLanguageFactory extends Factory
     public function definition()
     {
         return [
-            'message_place_id' => fake()->numberBetween(1, 10),
+            'masseuse_id' => fake()->numberBetween(1, 20),
             'language' => fake()->randomElement(['English', 'Japanese', 'Chinese', 'Korean', 'Vietnamese', 'Thai', 'Chinese'])
         ];
     }
 
     public function configure()
     {
-        return $this->afterCreating(function (ServiceLanguage $serviceLanguage) {
-            $serviceLanguage->timestamps = false;
+        return $this->afterCreating(function (MasseuseServiceLanguage $masseuseServiceLanguage) {
+            $masseuseServiceLanguage->timestamps = false;
         });
     }
 }

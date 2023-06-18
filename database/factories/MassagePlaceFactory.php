@@ -27,6 +27,7 @@ class MassagePlaceFactory extends Factory
             'advantage' => fake()->paragraph(),
             'max_price' => fake()->numberBetween(1000, 500000),
             'min_price' => fake()->numberBetween(1000, 500000),
+            'photo_url' => fake()->imageUrl(),
         ];
     }
 }
