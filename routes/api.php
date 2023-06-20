@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get("/massage-places", [MassagePlaceController::class, "getAllMassagePlaces"]);
+Route::post("/massage-places", [MassagePlaceController::class, "requestRegister"]);
 Route::get("/massage-places/{id}", [MassagePlaceController::class, "getMassagePlace"]);
 Route::get("/massage-places/{id}/staffs", [MasseuseController::class, "getALlStaffs"]);
 Route::get("/massage-places/{id}/staffs/{staffId}", [MasseuseController::class, "getStaff"]);
