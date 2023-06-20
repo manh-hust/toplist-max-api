@@ -4,8 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\MassagePlace;
 use App\Helpers\ApiResponse;
+use App\Http\Requests\MassagePlaceRequest;
 use App\Http\Resources\MassagePlaceResource;
 use Illuminate\Http\Request;
+use App\Enums\PlaceStatus;
+use Illuminate\Support\Facades\DB;
+use App\Http\Services\MassagePlaceService;
 
 class MassagePlaceController extends Controller
 {
@@ -37,6 +41,7 @@ class MassagePlaceController extends Controller
             );
         }
         $massagePlaces =  $query->with('serviceLanguages')
+            ->where("status", "=", PlaceStatus::ACTIVE)
             ->limit($limit)
             ->offset($offset)
             ->get();
@@ -58,9 +63,35 @@ class MassagePlaceController extends Controller
     public function getMassagePlace($id)
     {
         $massagePlace = MassagePlace::with('serviceLanguages')->find($id);
-        if (!$massagePlace) {
+        if (!$massagePlace || $massagePlace->status != PlaceStatus::ACTIVE) {
             return ApiResponse::createFailedResponse(["Massage place not found"], 404);
         }
         return ApiResponse::createSuccessResponse(new MassagePlaceResource($massagePlace));
+    }
+
+    public function requestRegister(MassagePlaceRequest $request)
+    {
+        $place = new MassagePlace();
+        $place->name = $request->name;
+        $place->address = $request->address;
+        $place->area = $request->address;
+        $place->review_content = $request->description;
+        $place->photo_url = $request->photoUrl;
+        $place->status = PlaceStatus::PENDING;
+        $place->phone_number = $request->phoneNumber ? $request->phoneNumber : "";
+        $place->service = $request->service ? $request->service : "Massage";
+        $place->max_price = $request->maxPrice ? $request->maxPrice : 0;
+        $place->min_price = $request->minPrice ? $request->minPrice : 0;
+
+        $languages = $request->languages;
+        $staffs = $request->staffs;
+
+        DB::transaction(function () use ($place, $languages, $staffs) {
+            $place->save();
+            MassagePlaceService::addServiceLanguage($languages, $place->id);
+            MassagePlaceService::addListStaff($staffs, $place->id);
+        });
+
+        return ApiResponse::createSuccessResponse([]);
     }
 }
