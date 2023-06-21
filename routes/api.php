@@ -30,3 +30,5 @@ Route::get("/massage-places/{id}/staffs/{staffId}", [MasseuseController::class, 
 Route::get("/massage-places/{id}/comments", [CommentController::class, "getAllComments"]);
 Route::post("/massage-places/{id}/comments", [CommentController::class, "createComment"]);
 Route::post("/massage-places/{id}/reports", [ReportController::class, "createReport"]);
+
+Route::post("/upload", [MassagePlaceController::class, "upload"]);

@@ -94,4 +94,12 @@ class MassagePlaceController extends Controller
 
         return ApiResponse::createSuccessResponse([]);
     }
+
+    public function upload(Request $request)
+    {
+        $file =  $request->file('image') ?  $request->file('image') : $request->file('photoUrl');
+        $fileName = $file->getClientOriginalName();
+        $file->move(public_path('images'), $fileName);
+        return ApiResponse::createSuccessResponse(["url" => env("APP_URL", "http://localhost:8000") . "/images/$fileName"]);
+    }
 }
