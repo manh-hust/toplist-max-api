@@ -28,4 +28,21 @@ class ReportController extends Controller
 
         return ApiResponse::createSuccessResponse([]);
     }
+
+    public function getAllReports()
+    {
+        $reports = Report::all();
+        return ApiResponse::createSuccessResponse($reports);
+    }
+
+    public function getReportsById($id)
+    {
+        $massagePlace = MassagePlace::find($id);
+        if ($massagePlace == null) {
+            return ApiResponse::createFailedResponse(["Massage place not found!"], 404);
+        }
+
+        $reports = Report::where('massage_place_id', $id)->get();
+        return ApiResponse::createSuccessResponse($reports);
+    }
 }

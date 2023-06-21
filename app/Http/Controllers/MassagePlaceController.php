@@ -102,4 +102,10 @@ class MassagePlaceController extends Controller
         $file->move(public_path('images'), $fileName);
         return ApiResponse::createSuccessResponse(["url" => env("APP_URL", "http://localhost:8000") . "/images/$fileName"]);
     }
+
+    public function getAllRequest()
+    {
+        $massagePlaces = MassagePlace::where("status", "=", PlaceStatus::PENDING)->get();
+        return ApiResponse::createSuccessResponse(MassagePlaceResource::collection($massagePlaces));
+    }
 }
