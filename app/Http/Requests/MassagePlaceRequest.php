@@ -13,14 +13,14 @@ class MassagePlaceRequest extends BaseRequest
             "name" => "required|unique:massage_places,name",
             "address" => "required",
             "description" => "required",
-            "photoUrl" => "required",
+            // "photoUrl" => "required",
             "languages" => "required|array|min:1",
             "languages.*" => "required|string|distinct",
             "staffs" => "required|array|min:1",
             "staffs.*.name" => "required",
             "staffs.*.age" => "required|integer|min:18",
             "staffs.*.experience" => "required|integer|min:0",
-            "staffs.*.image" => "required",
+            // "staffs.*.image" => "required",
         ];
     }
 
