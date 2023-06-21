@@ -13,14 +13,14 @@ class MassagePlaceRequest extends BaseRequest
             "name" => "required|unique:massage_places,name",
             "address" => "required",
             "description" => "required",
-            "photoUrl" => "required|url",
+            "photoUrl" => "required",
             "languages" => "required|array|min:1",
             "languages.*" => "required|string|distinct",
             "staffs" => "required|array|min:1",
             "staffs.*.name" => "required",
             "staffs.*.age" => "required|integer|min:18",
             "staffs.*.experience" => "required|integer|min:0",
-            "staffs.*.image" => "required|url",
+            "staffs.*.image" => "required",
         ];
     }
 
@@ -32,7 +32,6 @@ class MassagePlaceRequest extends BaseRequest
             "address.required" => "Address is required",
             "description.required" => "Description is required",
             "photoUrl.required" => "PhotoUrl is required",
-            "photoUrl.url" => "PhotoUrl must be a url",
             "languages.required" => "Languages is required",
             "languages.array" => "Languages must be an array",
             "languages.min" => "Languages must have at least 1 item",
@@ -50,7 +49,6 @@ class MassagePlaceRequest extends BaseRequest
             "staffs.*.experience.integer" => "Staff experience must be an integer",
             "staffs.*.experience.min" => "Staff experience must be greater than or equal to 0",
             "staffs.*.image.required" => "Staff image is required",
-            "staffs.*.image.url" => "Staff image must be a url",
         ];
     }
 }
