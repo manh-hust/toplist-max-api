@@ -40,4 +40,9 @@ class MassagePlace extends Model
     {
         return $this->hasMany(Report::class, 'massage_place_id', 'id');
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class, 'massage_place_id', 'id');
+    }
 }

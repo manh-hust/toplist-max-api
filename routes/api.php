@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReportController;
-
+use App\Http\Controllers\RatingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -32,6 +32,9 @@ Route::get("/massage-places/{id}/staffs/{staffId}", [MasseuseController::class, 
 
 Route::get("/massage-places/{id}/comments", [CommentController::class, "getAllComments"]);
 Route::post("/massage-places/{id}/comments", [CommentController::class, "createComment"]);
+
+Route::get("/massage-places/{id}/ratings", [RatingController::class, "getAllRatings"]);
+Route::post("/massage-places/{id}/ratings", [RatingController::class, "createRating"]);
 
 Route::get("/reports", [ReportController::class, "getAllReports"]);
 Route::post("/massage-places/{id}/reports", [ReportController::class, "getReportsById"]);
