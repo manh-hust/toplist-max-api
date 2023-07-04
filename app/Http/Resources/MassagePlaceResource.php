@@ -24,8 +24,10 @@ class MassagePlaceResource extends JsonResource
             'reviewContent' => $this->review_content,
             'phoneNumber' => $this->phone_number,
             'advantage' => $this->advantage,
+            'status' => $this->status,
             'maxPrice' => $this->max_price,
             'minPrice' => $this->min_price,
+            'photoUrl' => $this->photo_url,
             'serviceLanguages' => ServiceLanguageResource::collection($this->serviceLanguages),
         ];
     }
