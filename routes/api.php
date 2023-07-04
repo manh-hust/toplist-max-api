@@ -22,24 +22,35 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get("/massage-places", [MassagePlaceController::class, "getAllMassagePlaces"]);
-Route::get("/massage-places/request", [MassagePlaceController::class, "getAllRequest"]);
-Route::get("/massage-places/{id}", [MassagePlaceController::class, "getMassagePlace"]);
-Route::post("/massage-places", [MassagePlaceController::class, "requestRegister"]);
-Route::post("/massage-places/approve", [MassagePlaceController::class, "approveRegister"]);
-Route::post("/massage-places/reject", [MassagePlaceController::class, "rejectRegister"]);
+Route::prefix('massage-places')->group(function () {
+    Route::get("/", [MassagePlaceController::class, "getAllMassagePlaces"]);
+    Route::get("/{id}", [MassagePlaceController::class, "getMassagePlace"]);
+    Route::post("/", [MassagePlaceController::class, "requestRegister"]);
 
-Route::get("/massage-places/{id}/staffs", [MasseuseController::class, "getALlStaffs"]);
-Route::get("/massage-places/{id}/staffs/{staffId}", [MasseuseController::class, "getStaff"]);
+    Route::get("/{id}/staffs", [MasseuseController::class, "getALlStaffs"]);
+    Route::get("/{id}/staffs/{staffId}", [MasseuseController::class, "getStaff"]);
 
-Route::get("/massage-places/{id}/comments", [CommentController::class, "getAllComments"]);
-Route::post("/massage-places/{id}/comments", [CommentController::class, "createComment"]);
+    Route::get("/{id}/comments", [CommentController::class, "getAllCommentsPlace"]);
+    Route::post("/{id}/comments", [CommentController::class, "createComment"]);
 
-Route::get("/massage-places/{id}/ratings", [RatingController::class, "getAllRatings"]);
-Route::post("/massage-places/{id}/ratings", [RatingController::class, "createRating"]);
+    Route::get("/{id}/ratings", [RatingController::class, "getAllRatings"]);
+    Route::post("/{id}/ratings", [RatingController::class, "createRating"]);
 
-Route::get("/reports", [ReportController::class, "getAllReports"]);
-Route::post("/massage-places/{id}/reports", [ReportController::class, "getReportsById"]);
-Route::post("/massage-places/{id}/reports", [ReportController::class, "createReport"]);
+    Route::get("/{id}/reports", [ReportController::class, "getReportsById"]);
+    Route::post("/{id}/reports", [ReportController::class, "createReport"]);
+});
+
+
+Route::prefix('admin')->group(function () {
+    Route::get("/massage-places/request", [MassagePlaceController::class, "getAllRequest"]);
+    Route::post("/massage-places/approve", [MassagePlaceController::class, "approveRegister"]);
+    Route::post("/massage-places/reject", [MassagePlaceController::class, "rejectRegister"]);
+
+    Route::get("/reports", [ReportController::class, "getAllReports"]);
+    Route::delete("/reports/{id}", [ReportController::class, "deleteReport"]);
+
+    Route::get("/comments", [CommentController::class, "getAllComments"]);
+    Route::delete("/comments/{id}", [CommentController::class, "deleteComment"]);
+});
 
 Route::post("/upload", [MassagePlaceController::class, "upload"]);

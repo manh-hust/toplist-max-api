@@ -10,7 +10,7 @@ use App\Models\MassagePlace;
 
 class CommentController extends Controller
 {
-    public function getAllComments($id)
+    public function getAllCommentsPlace($id)
     {
         $comments = Comment::where('massage_place_id', $id)->get();
 
@@ -35,6 +35,26 @@ class CommentController extends Controller
         } else
             $comment->email_address = null;
         $comment->save();
+
+        return ApiResponse::createSuccessResponse([]);
+    }
+
+    public function getAllComments()
+    {
+        $comments = Comment::with('massagePlace')->whereHas('massagePlace', function ($query) {
+            $query->where('status', '=', 1);
+        })->get();
+
+        return ApiResponse::createSuccessResponse(CommentResource::collection($comments));
+    }
+
+    public function deleteComment($id)
+    {
+        $comment = Comment::find($id);
+        if (!$comment)
+            return ApiResponse::createFailedResponse(["Comment not found"], 404);
+
+        $comment->delete();
 
         return ApiResponse::createSuccessResponse([]);
     }
