@@ -36,6 +36,8 @@ class RatingController extends Controller
             $rating->email_address = null;
         $rating->save();
 
+        $massagePlace->rate = $massagePlace->ratings()->avg('point');
+        $massagePlace->save();
         return ApiResponse::createSuccessResponse([]);
     }
 }

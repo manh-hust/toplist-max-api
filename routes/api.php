@@ -24,8 +24,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get("/massage-places", [MassagePlaceController::class, "getAllMassagePlaces"]);
 Route::get("/massage-places/request", [MassagePlaceController::class, "getAllRequest"]);
-Route::post("/massage-places", [MassagePlaceController::class, "requestRegister"]);
 Route::get("/massage-places/{id}", [MassagePlaceController::class, "getMassagePlace"]);
+Route::post("/massage-places", [MassagePlaceController::class, "requestRegister"]);
+Route::post("/massage-places/approve", [MassagePlaceController::class, "approveRegister"]);
+Route::post("/massage-places/reject", [MassagePlaceController::class, "rejectRegister"]);
 
 Route::get("/massage-places/{id}/staffs", [MasseuseController::class, "getALlStaffs"]);
 Route::get("/massage-places/{id}/staffs/{staffId}", [MasseuseController::class, "getStaff"]);

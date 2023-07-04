@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Enums\PlaceStatus;
 use Illuminate\Support\Facades\DB;
 use App\Http\Services\MassagePlaceService;
+use App\Http\Requests\ApproveRequest;
 
 class MassagePlaceController extends Controller
 {
@@ -63,7 +64,7 @@ class MassagePlaceController extends Controller
     public function getMassagePlace($id)
     {
         $massagePlace = MassagePlace::with('serviceLanguages')->find($id);
-        if (!$massagePlace || $massagePlace->status != PlaceStatus::ACTIVE) {
+        if (!$massagePlace || $massagePlace->status == PlaceStatus::INACTIVE) {
             return ApiResponse::createFailedResponse(["Massage place not found"], 404);
         }
         return ApiResponse::createSuccessResponse(new MassagePlaceResource($massagePlace));
@@ -107,5 +108,36 @@ class MassagePlaceController extends Controller
     {
         $massagePlaces = MassagePlace::where("status", "=", PlaceStatus::PENDING)->get();
         return ApiResponse::createSuccessResponse(MassagePlaceResource::collection($massagePlaces));
+    }
+
+    public function approveRegister(ApproveRequest $request)
+    {
+        $massagePlace = MassagePlace::find($request->id);
+
+        if ($massagePlace->status == PlaceStatus::ACTIVE) {
+            return ApiResponse::createFailedResponse(["Massage place is already active"], 400);
+        }
+        if ($massagePlace->status == PlaceStatus::INACTIVE) {
+            return ApiResponse::createFailedResponse(["Massage place is not found"], 404);
+        }
+
+        $massagePlace->status = PlaceStatus::ACTIVE;
+        $massagePlace->save();
+
+        return ApiResponse::createSuccessResponse([]);
+    }
+
+    public function rejectRegister(ApproveRequest $request)
+    {
+        $massagePlace = MassagePlace::find($request->id);
+
+        if ($massagePlace->status == PlaceStatus::INACTIVE) {
+            return ApiResponse::createFailedResponse(["Massage place is not found"], 404);
+        }
+
+        $massagePlace->status = PlaceStatus::INACTIVE;
+        $massagePlace->save();
+
+        return ApiResponse::createSuccessResponse([]);
     }
 }
