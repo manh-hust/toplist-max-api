@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RatingController;
+use App\Http\Controllers\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,6 +44,8 @@ Route::prefix('massage-places')->group(function () {
 
 
 Route::prefix('admin')->group(function () {
+    Route::post("/login", [AuthController::class, "login"]);
+
     Route::get("/massage-places/request", [MassagePlaceController::class, "getAllRequest"]);
     Route::post("/massage-places/approve", [MassagePlaceController::class, "approveRegister"]);
     Route::post("/massage-places/reject", [MassagePlaceController::class, "rejectRegister"]);

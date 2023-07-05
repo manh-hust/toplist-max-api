@@ -28,6 +28,7 @@ class MassagePlaceResource extends JsonResource
             'maxPrice' => $this->max_price,
             'minPrice' => $this->min_price,
             'photoUrl' => $this->photo_url,
+            'createdAt' => $this->created_at->format('Y-m-d'),
             'serviceLanguages' => ServiceLanguageResource::collection($this->serviceLanguages),
         ];
     }
